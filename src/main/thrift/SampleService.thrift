@@ -1,16 +1,9 @@
 namespace java com.baskok.thriftsample.generated
 
 struct User {
-  1: string username,
-  2: string password
+  1: string username
 }
 
-enum LoginStatus {
-  SUCCESS,
-  FAIL
-}
-
-service Authentication {
-  string say_hello(),
-  LoginStatus login(1:User cred)
+service HelloService {
+  string say_hello(1: User user)
 }
