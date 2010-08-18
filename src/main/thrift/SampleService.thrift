@@ -5,5 +5,5 @@ struct User {
 }
 
 service HelloService {
-  string say_hello(1: User user)
+  string say_hello(1: User user, 2: string foo)
 }

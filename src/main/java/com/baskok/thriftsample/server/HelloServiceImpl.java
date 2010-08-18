@@ -8,7 +8,7 @@ import com.baskok.thriftsample.generated.User;
 public class HelloServiceImpl implements HelloService.Iface {
 
 	@Override
-	public String say_hello(User user) throws TException {
+	public String say_hello(User user, String foo) throws TException {
 		return "hello, world";
 	}
 
