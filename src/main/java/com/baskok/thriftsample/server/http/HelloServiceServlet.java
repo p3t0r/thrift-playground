@@ -29,11 +29,7 @@ public class HelloServiceServlet extends HttpServlet {
 		try {
 			PrintWriter writer = resp.getWriter();
 			writer.write("<html><body>");
-			String requestedMethod = null;
-			String[] parts = req.getServletPath().split("/");
-			if (parts.length > 0) {
-				requestedMethod = parts[1];
-			}
+			String requestedMethod = determineRequestedMethod(req);
 			if (requestedMethod == null) {
 				showAllMethods(writer);
 			} else if (allMethods().contains(requestedMethod)) {
@@ -48,6 +44,22 @@ public class HelloServiceServlet extends HttpServlet {
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String requestedMethod = determineRequestedMethod(req);
+		// TODO: continue here
+	}
+	
+	private String determineRequestedMethod(HttpServletRequest req) {
+		String requestedMethod = null;
+		String[] parts = req.getServletPath().split("/");
+		if (parts.length > 0) {
+			requestedMethod = parts[1];
+		}
+		return requestedMethod;
 	}
 
 	private void showAllMethods(PrintWriter writer) {
@@ -78,7 +90,7 @@ public class HelloServiceServlet extends HttpServlet {
 
 	private void showMethodWithParameters(PrintWriter writer,
 			String requestedMethod) throws Exception {
-		writer.write("<form>");
+		writer.write("<form method='post'>");
 		Class<?>[] classes = HelloService.class.getDeclaredClasses();
 		for (Class<?> clazz : classes) {
 			if ((requestedMethod + "_args").equals(clazz.getSimpleName())) {
